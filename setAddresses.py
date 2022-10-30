@@ -12,16 +12,16 @@ PUBLIC_KEY = w3.toChecksumAddress(os.getenv('PUBLIC_KEY'))
 
 def setActivePool():
     try:
-        ActivePoolContract = w3.eth.contract(address=contracts["ActivePool"], abi=abis.ActivePool())
+        activePoolContract = w3.eth.contract(address=contracts["activePool"], abi=abis.ActivePool())
         
-        tx = ActivePoolContract.functions.setAddresses(
-            contracts["BorrowerOperations"], 
-            contracts["TroveManager"],
-            contracts["StabilityPool"],
-            contracts["DefaultPool"],
-            contracts["CommunityIssuance"],
-            contracts["BorrowerRewards"],
-            contracts["DevAddress"]
+        tx = activePoolContract.functions.setAddresses(
+            contracts["borrowerOperations"], 
+            contracts["troveManager"],
+            contracts["stabilityPool"],
+            contracts["defaultPool"],
+            contracts["communityIssuance"],
+            contracts["borrowerRewards"],
+            contracts["devAddress"]
             ).buildTransaction({
                 "gasPrice": w3.eth.gas_price,
                 'from': PUBLIC_KEY, 
@@ -30,29 +30,29 @@ def setActivePool():
         
         signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
         tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print("ActivePool Complete : tx_hash", w3.toHex(tx_hash))
+        print("activePool Complete : tx_hash", w3.toHex(tx_hash))
         return w3.toHex(tx_hash)
     except:
-        print("Set ActivePool Failed")
+        print("Set activePool Failed")
 
 
 def setBorrowerOperations():
     try:
-        BorrowerOperationsContract = w3.eth.contract(address=contracts["BorrowerOperations"], abi=abis.BorrowerOperations())
+        borrowerOperationsContract = w3.eth.contract(address=contracts["borrowerOperations"], abi=abis.BorrowerOperations())
         
-        tx = BorrowerOperationsContract.functions.setAddresses(
-            contracts["TroveManager"], 
-            contracts["ActivePool"],
-            contracts["DefaultPool"],
-            contracts["StabilityPool"],
-            contracts["GasPool"],   
-            contracts["CollSurplusPool"], 
-            contracts["PriceFeedTestnet"],
-            contracts["SortedTroves"],
-            contracts["LUSDToken"],
-            contracts["LQTYStaking"],
-            contracts["BorrowerAccountingToken"],
-            contracts["BorrowerRewards"]
+        tx = borrowerOperationsContract.functions.setAddresses(
+            contracts["troveManager"], 
+            contracts["activePool"],
+            contracts["defaultPool"],
+            contracts["stabilityPool"],
+            contracts["gasPool"],   
+            contracts["collSurplusPool"], 
+            contracts["priceFeed"],
+            contracts["sortedTroves"],
+            contracts["lusdToken"],
+            contracts["lqtyStaking"],
+            contracts["borrowerAccountingToken"],
+            contracts["borrowerRewards"]
             ).buildTransaction({
                 "gasPrice": w3.eth.gas_price,
                 'from': PUBLIC_KEY, 
@@ -61,7 +61,7 @@ def setBorrowerOperations():
         
         signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
         tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print("BorrowerOperations Complete : tx_hash", w3.toHex(tx_hash))
+        print("borrowerOperations Complete : tx_hash", w3.toHex(tx_hash))
         return w3.toHex(tx_hash)
     except:
         print("Set Borrower Operations Failed")
@@ -69,20 +69,20 @@ def setBorrowerOperations():
 
 def setTroveManager():
     try:
-        TroveManagerContract = w3.eth.contract(address=contracts["TroveManager"], abi=abis.TroveManager())
+        troveManagerContract = w3.eth.contract(address=contracts["troveManager"], abi=abis.TroveManager())
         
-        tx = TroveManagerContract.functions.setAddresses(
-            contracts["BorrowerOperations"], 
-            contracts["ActivePool"],
-            contracts["DefaultPool"],
-            contracts["StabilityPool"],
-            contracts["GasPool"],   
-            contracts["CollSurplusPool"], 
-            contracts["PriceFeedTestnet"],
-            contracts["LUSDToken"],
-            contracts["SortedTroves"],
-            contracts["LQTYToken"],
-            contracts["LQTYStaking"],
+        tx = troveManagerContract.functions.setAddresses(
+            contracts["borrowerOperations"], 
+            contracts["activePool"],
+            contracts["defaultPool"],
+            contracts["stabilityPool"],
+            contracts["gasPool"],   
+            contracts["collSurplusPool"], 
+            contracts["priceFeed"],
+            contracts["lusdToken"],
+            contracts["sortedTroves"],
+            contracts["lqtyToken"],
+            contracts["lqtyStaking"],
             ).buildTransaction({
                 "gasPrice": w3.eth.gas_price,
                 'from': PUBLIC_KEY, 
@@ -91,23 +91,23 @@ def setTroveManager():
         
         signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
         tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print("TroveManager Complete : tx_hash", w3.toHex(tx_hash))
+        print("troveManager Complete : tx_hash", w3.toHex(tx_hash))
     except:
         print("Set Trove Manager Failed")
 
 
 def setStabilityPool():
     try:
-        StabilityPoolContract = w3.eth.contract(address=contracts["StabilityPool"], abi=abis.StabilityPool())
+        stabilityPoolContract = w3.eth.contract(address=contracts["stabilityPool"], abi=abis.StabilityPool())
         
-        tx = StabilityPoolContract.functions.setAddresses(
-            contracts["BorrowerOperations"], 
-            contracts["TroveManager"],
-            contracts["ActivePool"],
-            contracts["LUSDToken"],
-            contracts["SortedTroves"],
-            contracts["PriceFeedTestnet"],
-            contracts["CommunityIssuance"],
+        tx = stabilityPoolContract.functions.setAddresses(
+            contracts["borrowerOperations"], 
+            contracts["troveManager"],
+            contracts["activePool"],
+            contracts["lusdToken"],
+            contracts["sortedTroves"],
+            contracts["priceFeed"],
+            contracts["communityIssuance"],
             ).buildTransaction({
                 "gasPrice": w3.eth.gas_price,
                 'from': PUBLIC_KEY, 
@@ -116,7 +116,7 @@ def setStabilityPool():
         
         signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
         tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print("StabilityPool Complete : tx_hash", w3.toHex(tx_hash))
+        print("stabilityPool Complete : tx_hash", w3.toHex(tx_hash))
         return w3.toHex(tx_hash)
     except:
         print("Set Stability Pool Failed")
@@ -124,11 +124,11 @@ def setStabilityPool():
 
 def setDefaultPool():
     try:
-        DefaultPoolContract = w3.eth.contract(address=contracts["DefaultPool"], abi=abis.DefaultPool())
+        defaultPoolContract = w3.eth.contract(address=contracts["defaultPool"], abi=abis.DefaultPool())
         
-        tx = DefaultPoolContract.functions.setAddresses(
-            contracts["TroveManager"],
-            contracts["ActivePool"],
+        tx = defaultPoolContract.functions.setAddresses(
+            contracts["troveManager"],
+            contracts["activePool"],
             ).buildTransaction({
                 "gasPrice": w3.eth.gas_price,
                 'from': PUBLIC_KEY, 
@@ -137,7 +137,7 @@ def setDefaultPool():
         
         signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
         tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print("DefaultPool Complete : tx_hash", w3.toHex(tx_hash))
+        print("defaultPool Complete : tx_hash", w3.toHex(tx_hash))
         return w3.toHex(tx_hash)
     except:
         print("Set Default Pool Failed")
@@ -145,12 +145,12 @@ def setDefaultPool():
 
 def setCollSurplusPool():
     try:
-        CollSurplusPoolContract = w3.eth.contract(address=contracts["CollSurplusPool"], abi=abis.CollSurplusPool())
+        collSurplusPoolContract = w3.eth.contract(address=contracts["collSurplusPool"], abi=abis.CollSurplusPool())
         
-        tx = CollSurplusPoolContract.functions.setAddresses(
-            contracts["BorrowerOperations"], 
-            contracts["TroveManager"],
-            contracts["ActivePool"],
+        tx = collSurplusPoolContract.functions.setAddresses(
+            contracts["borrowerOperations"], 
+            contracts["troveManager"],
+            contracts["activePool"],
             ).buildTransaction({
                 "gasPrice": w3.eth.gas_price,
                 'from': PUBLIC_KEY, 
@@ -159,19 +159,19 @@ def setCollSurplusPool():
         
         signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
         tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print("CollSurplusPool Complete : tx_hash", w3.toHex(tx_hash))
+        print("collSurplusPool Complete : tx_hash", w3.toHex(tx_hash))
         return w3.toHex(tx_hash)
     except:
-        print("Set CollSurplusPool Failed")
+        print("Set collSurplusPool Failed")
 
 
 def setHintHelpers():
     try:
-        HintHelpersContract = w3.eth.contract(address=contracts["HintHelpers"], abi=abis.HintHelpers())
+        hintHelpersContract = w3.eth.contract(address=contracts["hintHelpers"], abi=abis.HintHelpers())
         
-        tx = HintHelpersContract.functions.setAddresses(
-            contracts["SortedTroves"],
-            contracts["TroveManager"],
+        tx = hintHelpersContract.functions.setAddresses(
+            contracts["sortedTroves"],
+            contracts["troveManager"],
             ).buildTransaction({
                 "gasPrice": w3.eth.gas_price,
                 'from': PUBLIC_KEY, 
@@ -181,22 +181,22 @@ def setHintHelpers():
         
         signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
         tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print("HintHelpers Complete : tx_hash", w3.toHex(tx_hash))
+        print("hintHelpers Complete : tx_hash", w3.toHex(tx_hash))
         return w3.toHex(tx_hash)
     except:
-        print("Set HintHelpers Failed")
+        print("Set hintHelpers Failed")
 
 
 def setLQTYStaking():
     try:      
-        LQTYStakingContract = w3.eth.contract(address=contracts["LQTYStaking"], abi=abis.LQTYStaking())
+        lqtyStakingContract = w3.eth.contract(address=contracts["lqtyStaking"], abi=abis.LQTYStaking())
         
-        tx = LQTYStakingContract.functions.setAddresses(
-            contracts["LQTYToken"],
-            contracts["LUSDToken"], 
-            contracts["TroveManager"],
-            contracts["BorrowerOperations"],
-            contracts["ActivePool"],
+        tx = lqtyStakingContract.functions.setAddresses(
+            contracts["lqtyToken"],
+            contracts["lusdToken"], 
+            contracts["troveManager"],
+            contracts["borrowerOperations"],
+            contracts["activePool"],
             ).buildTransaction({
                 "gasPrice": w3.eth.gas_price,
                 'from': PUBLIC_KEY, 
@@ -205,19 +205,19 @@ def setLQTYStaking():
         
         signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
         tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print("LQTYStaking Complete : tx_hash", w3.toHex(tx_hash))
+        print("lqtyStaking Complete : tx_hash", w3.toHex(tx_hash))
         return w3.toHex(tx_hash)
     except:
-        print("Set LQTYStaking Failed")
+        print("Set lqtyStaking Failed")
 
 
 def setCommunityIssuance():
     try:
-        CommunityIssuanceContract = w3.eth.contract(address=contracts["CommunityIssuance"], abi=abis.CommunityIssuance())
+        communityIssuanceContract = w3.eth.contract(address=contracts["communityIssuance"], abi=abis.CommunityIssuance())
         
-        tx = CommunityIssuanceContract.functions.setAddresses(
+        tx = communityIssuanceContract.functions.setAddresses(
             contracts["stlosToken"],
-            contracts["StabilityPool"], 
+            contracts["stabilityPool"], 
             ).buildTransaction({
                 "gasPrice": w3.eth.gas_price,
                 'from': PUBLIC_KEY, 
@@ -226,21 +226,21 @@ def setCommunityIssuance():
         
         signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
         tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print("CommunityIssuance Complete : tx_hash", w3.toHex(tx_hash))
+        print("communityIssuance Complete : tx_hash", w3.toHex(tx_hash))
         return w3.toHex(tx_hash)
     except:
         print("Set Community Issuance Failed")
         
 def setBorrowerRewards():
     try:
-        CommunityIssuanceContract = w3.eth.contract(address=contracts["BorrowerRewards"], abi=abis.BorrowerRewards())
+        communityIssuanceContract = w3.eth.contract(address=contracts["borrowerRewards"], abi=abis.BorrowerRewards())
         
-        tx = CommunityIssuanceContract.functions.setAddresses(
-            contracts["BorrowerAccountingToken"],
-            contracts["STLOSToken"], 
-            contracts["TroveManager"],
-            contracts["BorrowerOperations"],
-            contracts["ActivePool"],
+        tx = communityIssuanceContract.functions.setAddresses(
+            contracts["borrowerAccountingToken"],
+            contracts["stlosToken"], 
+            contracts["troveManager"],
+            contracts["borrowerOperations"],
+            contracts["activePool"],
             ).buildTransaction({
                 "gasPrice": w3.eth.gas_price,
                 'from': PUBLIC_KEY, 
@@ -249,12 +249,56 @@ def setBorrowerRewards():
         
         signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
         tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print("BorrowerRewards Complete : tx_hash", w3.toHex(tx_hash))
+        print("borrowerRewards Complete : tx_hash", w3.toHex(tx_hash))
         return w3.toHex(tx_hash)
     except:
-        print("Set BorrowerRewards Failed")
+        print("Set borrowerRewards Failed")
 
 
+def SetBorrowerAccountingToken():
+    try:
+        borrowerAccountingTokenContract = w3.eth.contract(address=contracts["borrowerAccountingToken"], abi=abis.BorrowerAccountingToken())
+        
+        tx = borrowerAccountingTokenContract.functions.transferOwnership(
+            contracts["borrowerOperations"],
+
+            ).buildTransaction({
+                "gasPrice": w3.eth.gas_price,
+                'from': PUBLIC_KEY, 
+                'nonce': w3.eth.getTransactionCount(PUBLIC_KEY)
+                })
+        
+        signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
+        tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+        print("borrowerAccountingToken Complete : tx_hash", w3.toHex(tx_hash))
+        return w3.toHex(tx_hash)
+    except:
+        print("Set borrowerAccountingToken Failed")
+        
+
+def SetSortedTroves():
+    try:
+        sortedTrovesContract = w3.eth.contract(address=contracts["sortedTroves"], abi=abis.SortedTroves())
+        
+        tx = sortedTrovesContract.functions.setParams(  
+            1000000,
+            contracts["troveManager"],
+            contracts["borrowerOperations"],
+
+            ).buildTransaction({
+                "gasPrice": w3.eth.gas_price,
+                'from': PUBLIC_KEY, 
+                'nonce': w3.eth.getTransactionCount(PUBLIC_KEY)
+                })
+        
+        signed_tx = w3.eth.account.signTransaction(tx, PRIVATE_KEY)
+        tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+        print("sortedTroves Complete : tx_hash", w3.toHex(tx_hash))
+        return w3.toHex(tx_hash)
+    except:
+        print("Set sortedTroves Failed")
+    
+    
 def setAllContracts():
     setActivePool()
     setBorrowerOperations()
@@ -263,7 +307,9 @@ def setAllContracts():
     setDefaultPool()
     setCollSurplusPool()
     setHintHelpers()
-    setLQTYStaking()
     setCommunityIssuance()
     setBorrowerRewards()
+    setLQTYStaking()
+    SetBorrowerAccountingToken()
+    SetSortedTroves()
 setAllContracts()
